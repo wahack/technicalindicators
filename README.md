@@ -1,79 +1,46 @@
 
 # TechnicalIndicators
 
-A javascript technical indicators written in typescript.
+A javascript technical indicators library written in TypeScript.
 
-A fork base on [anandanand84/technicalindicators](https://github.com/anandanand84/technicalindicators)
+
+## What's New
+
+- **Supertrend Indicator**: New trend-following indicator added
+- **Modern Build System**: Upgraded to TypeScript 5.6, Node.js 22 compatible
+- **Simplified Build**: Removed Rollup and Babel, using TypeScript directly
+- **Server-Side Focus**: Optimized for Node.js server-side usage
 
 # Installation
 
-## Node.js versions >= 10
+## Node.js
+
+**Requires Node.js 18+ (tested with Node.js 22)**
 
 ``` bash
-npm install --save git+https://github.com/wahack/technicalindicators.git
+npm install @wahack/technicalindicators
 ```
 
 ``` javascript
-const SMA = require('technicalindicators').SMA;
+const { SMA, supertrend } = require('@wahack/technicalindicators');
+// or
+const SMA = require('@wahack/technicalindicators').SMA;
 ```
 
-## Node.js versions < 10
+## TypeScript Support
 
-For nodejs version below 10 use 1.x versions of this library.
+Full TypeScript definitions are included:
 
-## Webpack
+``` typescript
+import { SMA, Supertrend, SupertrendInput, SupertrendOutput } from '@wahack/technicalindicators';
 
-Make sure you have the following in your config file.
-
-``` javascript
-module.exports = {
-  resolve: {
-    mainFields: ["module", "main"]
-  }
-}
-
-```
-
-## Browser
-
-For browsers install using npm,
-
-For ES6 browsers use
-
-``` bash
-npm install --save technicalindicators
-```
-
-```html
-<script src="node_modules/technicalindicators/dist/browser.es6.js"></script>
-```
-
-For ES5 support it is necessary to include the babel-polyfill and respective file browser.js otherwise you will get an error. For example see [index.html](https://github.com/anandanand84/technicalindicators/blob/master/index.html "index.html")
-
-``` bash
-npm install --save technicalindicators
-npm install --save babel-polyfill
-```
-
-``` html
-<script src="node_modules/babel-polyfill/browser.js"></script>
-<script src="node_modules/technicalindicators/dist/browser.js"></script>
-```
-
-### Pattern detection
-
-Pattern detection is removed from version 3.0, if you need pattern detection use v2.0
-
-All indicators will be available in window object. So you can just use
-
-``` javascript
-sma({period : 5, values : [1,2,3,4,5,6,7,8,9], reversedInput : true});
-```
-
-or
-
-``` javascript
-SMA.calculate({period : 5, values : [1,2,3,4,5,6,7,8,9]});
+const result = supertrend({
+  high: [100, 102, 101, 103],
+  low: [99, 101, 100, 102],
+  close: [101, 101.5, 102, 102.5],
+  period: 10,
+  multiplier: 3
+});
 ```
 
 # Playground
@@ -108,6 +75,9 @@ SMA.calculate({period : 5, values : [1,2,3,4,5,6,7,8,9]});
 1. [Wilder’s Smoothing (Smoothed Moving Average, WEMA)](https://tonicdev.com/anandaravindan/wema "WEMA").
 1. [WilliamsR (W%R)](https://tonicdev.com/anandaravindan/williamsr "W%R").
 1. [Ichimoku Cloud](https://github.com/anandanand84/technicalindicators/blob/master/test/ichimoku/IchimokuCloud.js "Ichimoku Cloud").
+1. [Keltner Channels](https://github.com/anandanand84/technicalindicators/blob/master/test/volatility/KeltnerChannels.js "Keltner Channels").
+1. [Chandelier Exit](https://github.com/anandanand84/technicalindicators/blob/master/test/volatility/ChandelierExit.js "Chandelier Exit").
+1. [Supertrend](https://github.com/wahack/technicalindicators/blob/master/src/volatility/Supertrend.ts "Supertrend") - A trend-following indicator that uses ATR to determine trend direction.
 
 # Other Utils
 
@@ -257,26 +227,18 @@ Create issues about anything you want to report, change of API's, or request for
 
 ## Environment dependencies
 
-Typescript: Use typescript 2.0.0 other you might get max call stack reached error.
+- **Node.js**: 18+ (tested with Node.js 22)
+- **TypeScript**: 5.6+ (for development)
 
-``` npm install -g typescript@2.0.0 ```
-
-TechnicalIndicators depends on the [`canvas` package](https://npmjs.com/canvas), which requires some dependencies to be installed. You can find the instructions to do that [here](https://github.com/Automattic/node-canvas#installation). If you do not install these dependencies, expect to get this error message during the installation of TechnicalIndicators:
-
-```
-> canvas@1.6.6 install /Users/balupton/Projects/trading/technicalindicators/node_modules/canvas
-> node-gyp rebuild
-
-./util/has_lib.sh: line 31: pkg-config: command not found
-gyp: Call to './util/has_lib.sh freetype' returned exit status 0 while in binding.gyp. while trying to load binding.gyp
-```
+The `canvas` package is optional and only needed for running tests that generate candlestick images. If you don't need to run those tests, you can skip installing canvas dependencies.
 
 ## Setup
 
 ``` bash
-git clone git@github.com:wahack/technicalindicators.git  # or use your fork
+git clone git@github.com:wahack/technicalindicators.git
 cd technicalindicators
-npm run start
+npm install
+npm run build
 ```
 
 ## Running tests and getting coverage
@@ -290,17 +252,34 @@ npm run cover
 
 1. Add tests for the indicator and make them pass.
    (It would be better if a sample of the stockcharts excel is used for the test case.)
-1. Add the indicator to the `index.js` and `src/index.ts`
-1. Run build scripts: `npm run build-lib && npm run generateDts && npm run start`
+1. Add the indicator to `src/index.ts`
+1. Run build script: `npm run build`
 1. Add it to `README.md`, with the link to the runkit url containing the sample.
-1. Add indicator it to keywords in `package.json` and `bower.json`
+1. Add indicator to keywords in `package.json`
 1. Send a Pull Request.
 
 
-## Verify Documentation
+## Example: Using Supertrend
 
-``` bash
-node testdocs.js
-open "http://localhost:5444/testdocs.html"
+``` javascript
+const { supertrend } = require('@wahack/technicalindicators');
+
+const input = {
+  high: [100, 102, 101, 103, 105, 104, 106],
+  low: [99, 101, 100, 102, 104, 103, 105],
+  close: [101, 101.5, 102, 102.5, 104.5, 103.5, 105.5],
+  period: 10,
+  multiplier: 3,
+  changeATR: true
+};
+
+const result = supertrend(input);
+// Returns array of SupertrendOutput objects with:
+// - supertrend: number
+// - upper: number
+// - lower: number
+// - trend: number (1 for up, -1 for down)
+// - buySignal: boolean
+// - sellSignal: boolean
 ```
 

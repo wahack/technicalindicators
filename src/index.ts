@@ -33,7 +33,7 @@ export  { sd, SD }                         from  './Utils/SD';
 export  { highest, Highest }                         from  './Utils/Highest';
 export  { lowest, Lowest }                         from  './Utils/Lowest';
 export  { sum, Sum }                         from  './Utils/Sum';
-export  { FixedSizeLinkedList }                 
+export  { FixedSizeLinkedList }
 
 export  { renko }                         from  './chart_types/Renko';
 export  { HeikinAshi, heikinashi }        from  './chart_types/HeikinAshi';
@@ -92,6 +92,7 @@ export  { ichimokucloud, IchimokuCloud }              from './ichimoku/IchimokuC
 
 export  { keltnerchannels, KeltnerChannels, KeltnerChannelsInput, KeltnerChannelsOutput }              from './volatility/KeltnerChannels';
 export  { chandelierexit, ChandelierExit, ChandelierExitInput, ChandelierExitOutput }              from './volatility/ChandelierExit';
+export  { supertrend, Supertrend, SupertrendInput, SupertrendOutput }              from './volatility/Supertrend';
 export  { crossUp, CrossUp }           from './Utils/CrossUp';
 export  { crossDown, CrossDown }       from './Utils/CrossDown';
 

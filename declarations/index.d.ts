@@ -75,6 +75,7 @@ export { fibonacciretracement } from './drawingtools/fibonacci';
 export { ichimokucloud, IchimokuCloud } from './ichimoku/IchimokuCloud';
 export { keltnerchannels, KeltnerChannels, KeltnerChannelsInput, KeltnerChannelsOutput } from './volatility/KeltnerChannels';
 export { chandelierexit, ChandelierExit, ChandelierExitInput, ChandelierExitOutput } from './volatility/ChandelierExit';
+export { supertrend, Supertrend, SupertrendInput, SupertrendOutput } from './volatility/Supertrend';
 export { crossUp, CrossUp } from './Utils/CrossUp';
 export { crossDown, CrossDown } from './Utils/CrossDown';
 export { setConfig, getConfig } from './config';
